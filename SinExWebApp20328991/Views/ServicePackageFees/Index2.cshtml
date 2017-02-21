@@ -1,0 +1,101 @@
+﻿@model IEnumerable<SinExWebApp20328991.Models.ServicePackageFee>
+@using System.Collections;
+
+@{
+    ViewBag.Title = "Service Package Fees";
+}
+
+<h2>Service Package Fees</h2>
+
+<p>
+   
+</p>
+@{  ArrayList vTypes =  new ArrayList(); var typeNumber = 0;}
+@{
+
+    foreach (var item in Model)
+    {
+
+        string tempName = item.PackageType.Type;
+
+
+
+        for (int i = 0; i < typeNumber + 1; i++)
+        { 
+            if (!vTypes.Contains(tempName))
+            {
+                vTypes.Add(tempName);
+                typeNumber = typeNumber + 1;
+                break;
+            }
+        }
+    }
+
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceType)
+        </th>
+        <th colspan=@typeNumber style="text-align:center;">
+            @Html.DisplayNameFor(model => model.PackageType)
+        </th>
+      
+        
+    </tr>
+    <tr>
+        <th>
+            
+        </th>
+@foreach (var x in vTypes)
+{
+        <th>
+            @Html.DisplayFor(modelItem => x)
+        </th>
+}
+
+    </tr>
+    @{ string currentServiceType = ""; int count = 0; bool firstOrNot=false;}
+@foreach (var item in Model)
+{
+    if (((currentServiceType) != (item.ServiceType.Type)) && count == 0)
+    {
+        firstOrNot = true;
+
+           @:<tr><td>
+           @Html.DisplayFor(modelItem => item.ServiceType.Type)
+           @:</td>
+           count = count + 1;
+    }
+    else if (((currentServiceType) != (item.ServiceType.Type)) && count != 0)
+    {
+        firstOrNot = true;
+       @:</tr>
+       @:<tr><td>
+      @Html.DisplayFor(modelItem => item.ServiceType.Type)
+    @:</td>
+
+    }
+
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Fee) 
+            @if (!firstOrNot)
+            {
+
+                @:(
+                    @Html.DisplayFor(modelItem => item.MinimumFee)
+                @:)
+
+
+
+            }
+            @{firstOrNot = false;
+            }
+        </td>
+    currentServiceType = item.ServiceType.Type;
+}
+    </tr>
+</table>
