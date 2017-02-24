@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using X.PagedList;
 
 namespace SinExWebApp20328991.ViewModel
 {

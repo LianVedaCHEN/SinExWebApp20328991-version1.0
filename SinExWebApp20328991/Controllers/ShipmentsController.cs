@@ -16,15 +16,21 @@ namespace SinExWebApp20328991.Controllers
         private SinExDatabaseContext db = new SinExDatabaseContext();
         // GET: Shipments/GenerateHistoryReport
         public ActionResult GenerateHistoryReport(int? ShippingAccountId, string SortOrder,int? currentShippingAccountId,
-           string currentServiceType,string currentShippedDate,string currentDeliveredDate ,string currentRecipientName, string currentOrigin ,string currentDestination)
+           string currentServiceType,string currentShippedDate,string currentDeliveredDate ,string currentRecipientName, string currentOrigin ,string currentDestination,int? page)
         {
             // Instantiate an instance of the ShipmentsReportViewModel and the ShipmentsSearchViewModel.
             var shipmentSearch = new ShipmentsReportViewModel();
             shipmentSearch.Shipment = new ShipmentsSearchViewModel();
-
+            ViewBag.currrentSort = SortOrder;
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
             if (ShippingAccountId == null)
             {
                 ShippingAccountId = currentShippingAccountId;
+            }
+            else
+            {
+                page = 1;
             }
             ViewBag.currentShippingAccountId = ShippingAccountId;
             // Populate the ShippingAccountId dropdown list.
